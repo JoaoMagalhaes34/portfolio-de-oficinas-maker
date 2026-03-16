@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.P. Magalhães da Cunha | Portfólio</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonte Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIÁVEIS & RESET --- */
+        :root {
+            --primary: #1a2a3a; /* Azul Profundo */
+            --accent: #ff6b6b;  /* Coral Vibrante */
+            --accent-2: #feca57; /* Amarelo Solar */
+            --bg: #f8f9fa;
+            --text: #333;
+            --white: #fff;
+            --gray: #666;
+            --sidebar-width: 280px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; display: flex; }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            height: 100vh;
+            position: fixed;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #eee;
+            z-index: 100;
+            transition: 0.3s;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item {
+            background: none; border: none; text-align: left;
+            padding: 15px; margin-bottom: 8px;
+            border-radius: 12px; cursor: pointer;
+            color: #666; font-weight: 600;
+            transition: 0.3s; font-size: 1rem;
+            display: flex; align-items: center; gap: 12px;
+            width: 100%;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary); color: var(--white);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(26, 42, 58, 0.2);
+        }
+
+        .profile-mini {
+            margin-top: auto;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .profile-mini p { font-size: 0.8rem; color: #999; }
+
+        /* --- MAIN CONTENT --- */
+        .main {
+            margin-left: var(--sidebar-width);
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .section { display: none; padding: 3rem 4rem; animation: fadeIn 0.5s ease; }
+        .section.active { display: block; }
+
+        /* --- HERO SECTION --- */
+        #home.section { padding: 0; height: 100vh; overflow: hidden; position: relative; }
+
+        .hero-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        
+        .hero-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; animation: slideShow 15s infinite;
+        }
+
+        .slide-1 { background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1920&auto=format&fit=crop'); animation-delay: 0s; }
+        .slide-2 { background-image: url('https://images.unsplash.com/photo-1596496050844-461db26a2c76?q=80&w=1920&auto=format&fit=crop'); animation-delay: 5s; }
+        .slide-3 { background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1920&auto=format&fit=crop'); animation-delay: 10s; }
+
+        @keyframes slideShow {
+            0% { opacity: 0; transform: scale(1.1); }
+            10% { opacity: 1; transform: scale(1); }
+            33% { opacity: 1; transform: scale(1); }
+            43% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(26, 42, 58, 0.9) 0%, rgba(26, 42, 58, 0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative; z-index: 2; height: 100%;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 0 6rem; color: white;
+        }
+
+        .hero-tag {
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            font-size: 1.2rem; margin-bottom: 20px;
+        }
+
+        .hero-title { font-size: 4.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 700; }
+        .hero-lead { font-size: 1.4rem; max-width: 600px; color: rgba(255,255,255,0.8); margin-bottom: 40px; border-left: 4px solid var(--accent); padding-left: 20px; }
+        
+        .btn-hero {
+            padding: 18px 40px; background: linear-gradient(90deg, var(--accent), #ff9f43);
+            color: white; border: none; border-radius: 50px; cursor: pointer;
+            font-size: 1.1rem; font-weight: bold; text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3); transition: 0.3s;
+            text-decoration: none; display: inline-block; width: fit-content;
+        }
+        .btn-hero:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255, 107, 107, 0.5); }
+
+        /* --- ESTILOS DO "SOBRE MIM" --- */
+        .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; }
+        
+        .manifesto-box {
+            background: #fff3cd; border-left: 5px solid var(--accent);
+            padding: 2rem; margin-bottom: 2rem; border-radius: 0 10px 10px 0;
+        }
+        .manifesto-box h3 { color: #856404; margin-bottom: 1rem; }
+        .manifesto-box p { font-style: italic; color: #664d03; }
+        
+        .timeline-item {
+            padding-left: 20px; border-left: 2px solid #ddd;
+            margin-bottom: 2rem; position: relative;
+        }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -6px; top: 0;
+            width: 10px; height: 10px; background: var(--accent); border-radius: 50%;
+        }
+        .timeline-title { font-weight: 700; color: var(--primary); display: block; font-size: 1.1rem; }
+        .timeline-desc { font-size: 0.95rem; color: #666; margin-top: 5px; }
+
+        .info-card {
+            background: white; padding: 30px; border-radius: 15px;
+            border: 1px solid #eee; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .info-card .avatar {
+            width: 120px; height: 120px; background: var(--primary); color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; margin: 0 auto 15px; border: 4px solid var(--bg);
+        }
+
+        /* --- ESTILOS DO "CONTATO" --- */
+        .contact-hero {
+            background: var(--primary); color: white;
+            padding: 3rem; border-radius: 20px; text-align: center; margin-bottom: 2rem;
+        }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .contact-box {
+            background: white; padding: 2rem; border-radius: 15px;
+            text-align: center; border: 1px solid #eee; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .contact-box:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--accent); }
+        .contact-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem; }
+        .contact-link { 
+            display: inline-block; padding: 10px 25px; 
+            background: var(--primary); color: white; 
+            text-decoration: none; border-radius: 25px; margin-top: 15px;
+            font-weight: 600; font-size: 0.9rem; transition: 0.3s;
+        }
+        .contact-link:hover { background: var(--accent); }
+
+        /* --- CARDS & GRID --- */
+        .filters-container { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 2rem; }
+        .filter-btn {
+            padding: 8px 16px; border: 1px solid #ddd; background: white; border-radius: 20px;
+            cursor: pointer; font-size: 0.9rem; transition: 0.3s; color: #666;
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .card { background: var(--white); border-radius: 20px; overflow: hidden; border: 1px solid #eee; transition: 0.4s; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card-img-top { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: rgba(255,255,255,0.9); }
+        
+        .tech-grad { background: linear-gradient(135deg, #0984e3, #6c5ce7); }
+        .art-grad { background: linear-gradient(135deg, #fd79a8, #e84393); }
+        .eco-grad { background: linear-gradient(135deg, #00b894, #00cec9); }
+        .edu-grad { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+        .soc-grad { background: linear-gradient(135deg, #636e72, #2d3436); }
+
+        .card-body { padding: 1.5rem; }
+        .badge { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #999; margin-bottom: 10px; display: block; }
+        .card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; }
+        .card p { color: #666; font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; }
+        .btn-link { color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); width: 260px; }
+            .sidebar.active { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .hero-content { padding: 0 2rem; }
+            .hero-title { font-size: 3rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .mobile-toggle { display: block; position: fixed; top: 20px; right: 20px; z-index: 200; background: var(--primary); color: white; padding: 10px; border-radius: 8px; border: none; }
+        }
+        @media (min-width: 901px) { .mobile-toggle { display: none; } }
+
+        /* --- MODAL --- */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8); z-index: 200; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+        .detail-view { position: fixed; top: 0; right: -100%; width: 100%; max-width: 600px; height: 100vh; background: white; z-index: 250; padding: 3rem; overflow-y: auto; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); }
+        .detail-view.active { right: 0; }
+        .close-btn { position: absolute; top: 20px; left: 20px; background: #eee; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+
+    </style>
+</head>
+<body>
+
+    <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+
+    <!-- NAVEGAÇÃO LATERAL -->
+    <nav class="sidebar" id="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-cube" style="color: var(--accent);"></i> J.P. Magalhães
+        </div>
+        <button class="nav-item active" onclick="navTo('home')"><i class="fa-solid fa-house"></i> Início</button>
+        <button class="nav-item" onclick="navTo('about')"><i class="fa-solid fa-user-astronaut"></i> Sobre Mim</button>
+        <button class="nav-item" onclick="navTo('catalog')"><i class="fa-solid fa-layer-group"></i> Catálogo de Oficinas</button>
+        <button class="nav-item" onclick="navTo('contact')"><i class="fa-solid fa-paper-plane"></i> Contato</button>
+
+        <div class="profile-mini">
+            <strong>João Pedro Magalhães</strong><br>
+            <p>Rio de Janeiro - Jacarepaguá</p>
+        </div>
+    </nav>
+
+    <main class="main">
+        
+        <!-- SEÇÃO: HOME -->
+        <section id="home" class="section active">
+            <div class="hero-slider">
+                <div class="hero-slide slide-1"></div>
+                <div class="hero-slide slide-2"></div>
+                <div class="hero-slide slide-3"></div>
+            </div>
+            <div class="hero-overlay"></div>
+            
+            <div class="hero-content">
+                <span class="hero-tag">Portfólio Narrativo</span>
+                <h1 class="hero-title">Ensinar é construir<br>autonomia.</h1>
+                <p class="hero-lead">"Educação começa quando o interesse vira investigação."<br>Uma abordagem que une a potência da periferia com a inovação tecnológica.</p>
+                <button onclick="navTo('catalog')" class="btn-hero">Explorar Oficinas</button>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: SOBRE MIM -->
+        <section id="about" class="section">
+            <h2 style="color:var(--primary); margin-bottom: 2rem;">Sobre Mim</h2>
+            <div class="about-grid">
+                <div>
+                    <!-- Manifesto -->
+                    <div class="manifesto-box">
+                        <h3><i class="fa-solid fa-quote-left"></i> Manifesto Pedagógico</h3>
+                        <p>"Minha trajetória com educação começou antes de qualquer formação acadêmica. Durante o ensino médio (2014-2016), percebi que muitos estudantes iam à biblioteca movidos por curiosidade, mas esse movimento não era reconhecido como aprendizado. Ali entendi que educação nasce do interesse genuíno. Inspirado pelas ideias de Paulo Freire, compreendo a educação como um processo crítico e dialógico, que prepara o sujeito para ser autor da própria história."</p>
+                    </div>
+
+                    <!-- Texto de Apresentação -->
+                    <h3 style="margin-bottom: 20px;">Quem é J.P. Magalhães da Cunha</h3>
+                    <p style="margin-bottom: 20px; line-height: 1.7;">
+                        Cientista Social em formação pela PUC-Rio, educador popular e produtor cultural com atuação territorial na Baixada de Jacarepaguá, na cidade do Rio de Janeiro. Minha prática conecta pesquisa acadêmica, cultura comunitária e inovação tecnológica. Ao longo de mais de uma década, desenvolvi metodologias próprias que unem arte, ciência e tecnologia como ferramentas de autonomia. Estima-se que mais de <strong>1.500 pessoas</strong> tenham sido diretamente impactadas pelas oficinas, saraus e projetos formativos que conduzi desde 2014.
+                    </p>
+
+                    <!-- Trajetória Detalhada -->
+                    <h3 style="margin-bottom: 20px; margin-top: 30px;">Jornada de Impacto</h3>
+                    
+                    <div class="timeline-item">
+                        <span class="timeline-title">Pesquisa e Inovação</span>
+                        <span class="timeline-desc">Agente Comunitário de Pesquisa e Inovação (PUC-Rio/Instituto Prover). Coleta e análise de dados sobre saúde ambiental em Rio das Pedras.</span>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-title">Comunicação Popular</span>
+                        <span class="timeline-desc">Jornal Abaixo Assinado de Jacarepaguá (JAAJ) desde 2017. Colunista, articulador de redes e responsável pela digitalização do jornal.</span>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-title">Liderança Pública</span>
+                        <span class="timeline-desc">Presidente da AMAF (2022), Primeiro Secretário do Conselho Comunitário de Segurança (2022) e Conselheiro Municipal de Juventude (2016-2017).</span>
+                    </div>
+                </div>
+
+                <!-- Coluna Lateral (Cartão de Perfil) -->
+                <div>
+                    <div class="info-card">
+                        <div class="avatar">JP</div>
+                        <h4>J.P. Magalhães</h4>
+                        <p style="font-size: 0.9rem; margin-bottom: 15px;">Cientista Social & Maker</p>
+                        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 5px;"><i class="fa-solid fa-location-dot"></i> Rio de Janeiro</p>
+                        <p style="font-size: 0.85rem; color: #666;"><i class="fa-solid fa-map-pin"></i> Baixada de Jacarepaguá</p>
+                        <br>
+                        <button onclick="navTo('contact')" style="width: 100%; padding: 12px; background: var(--accent); border: none; color: white; border-radius: 25px; cursor: pointer; font-weight: bold;">Entrar em Contato</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: CATÁLOGO -->
+        <section id="catalog" class="section">
+            <h2 style="color:var(--primary); margin-bottom: 1rem;">Catálogo de Oficinas</h2>
+            <p style="color:#666; margin-bottom: 2rem;">Experiências desenhadas para conectar tecnologia, território e sensibilidade humana.</p>
+            
+            <div class="filters-container">
+                <button class="filter-btn active" onclick="filterWorkshops('all', this)">Todos</button>
+                <button class="filter-btn" onclick="filterWorkshops('tech', this)">Tecnologia & Vibe Coding</button>
+                <button class="filter-btn" onclick="filterWorkshops('edu', this)">Inclusão & Educação</button>
+                <button class="filter-btn" onclick="filterWorkshops('art', this)">Arte & Cultura</button>
+                <button class="filter-btn" onclick="filterWorkshops('eco', this)">Permacultura</button>
+                <button class="filter-btn" onclick="filterWorkshops('soc', this)">Liderança</button>
+            </div>
+
+            <div class="grid" id="workshop-grid">
+                <!-- JS preenche aqui -->
+            </div>
+        </section>
+
+        <!-- SEÇÃO: CONTATO -->
+        <section id="contact" class="section">
+            <div class="contact-hero">
+                <i class="fa-regular fa-comments" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                <h2 style="color: white; border: none; margin-bottom: 10px;">Vamos Conversar?</h2>
+                <p style="color: rgba(255,255,255,0.8); font-size: 1.2rem;">Estou disponível para projetos educacionais, palestras e consultorias.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-box">
+                    <i class="fa-brands fa-whatsapp contact-icon" style="color:#25D366;"></i>
+                    <h3>WhatsApp</h3>
+                    <p style="color:#666; font-size:0.9rem;">Fale diretamente comigo</p>
+                    <a href="https://wa.me/5521970442860" target="_blank" class="contact-link" style="background:#25D366;">21 97044-2860</a>
+                </div>
+
+                <div class="contact-box">
+                    <i class="fa-regular fa-envelope contact-icon" style="color:var(--primary);"></i>
+                    <h3>E-mail</h3>
+                    <p style="color:#666; font-size:0.9rem;">Para propostas formais</p>
+                    <a href="mailto:joao.magalhaes.34@gmail.com?subject=Interesse%20em%20oficinas" class="contact-link">Enviar E-mail</a>
+                </div>
+
+                <div class="contact-box">
+                    <i class="fa-brands fa-linkedin-in contact-icon" style="color:#0077b5;"></i>
+                    <h3>LinkedIn</h3>
+                    <p style="color:#666; font-size:0.9rem;">Minha rede profissional</p>
+                    <a href="https://www.linkedin.com/in/magalhaescunha/" target="_blank" class="contact-link" style="background:#0077b5;">Acessar Perfil</a>
+                </div>
+
+                <div class="contact-box">
+                    <i class="fa-solid fa-graduation-cap contact-icon" style="color:var(--accent);"></i>
+                    <h3>Currículo Lattes</h3>
+                    <p style="color:#666; font-size:0.9rem;">Produção acadêmica e pesquisa</p>
+                    <a href="https://lattes.cnpq.br/5362721932499930" target="_blank" class="contact-link" style="background:#333;">Ver Lattes</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem; color: #999;">
+                <p>Cidade base: Rio de Janeiro - Baixada de Jacarepaguá</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal de Detalhes -->
+    <div class="overlay" id="overlay" onclick="closeDetail()"></div>
+    <div class="detail-view" id="detail-panel">
+        <button class="close-btn" onclick="closeDetail()"><i class="fa-solid fa-arrow-right"></i></button>
+        <div id="detail-content"></div>
+    </div>
+
+    <script>
+        // --- DADOS DAS OFICINAS ---
+        const workshops = [
+            {
+                id: 7, category: 'tech', grad: 'tech-grad', icon: 'fa-mobile-screen-button',
+                title: "Vibe Coding & Apps Locais",
+                tag: "Linguagem Natural",
+                short: "Criando apps reais sem saber programar.",
+                intro: "Esqueça a sintaxe complexa. Com o 'Vibe Coding', ensinamos jovens a criar aplicativos e jogos sobre o bairro usando apenas português e Inteligência Artificial. É a entrada mais fácil e empolgante para o mundo da tecnologia.",
+                syllabus: [
+                    "Programação em Linguagem Natural: Transformando ideias em software conversando com a IA.",
+                    "Engenharia de Prompt: Estruturando pedidos lógicos para a máquina.",
+                    "Narrativas Locais: Criando apps que resolvem problemas do bairro.",
+                    "Publicação Web: Colocando o app no ar em minutos."
+                ]
+            },
+            {
+                id: 1, category: 'edu', grad: 'edu-grad', icon: 'fa-shapes',
+                title: "Mediação Escolar e Neurodiversidade",
+                tag: "Escola Lúcia Miguel Pereira",
+                short: "Inclusão TEA/Down e dinâmica dos espelhos.",
+                intro: "A inclusão não é apenas estar na sala, é participar dela. Ferramentas práticas para o acolhimento de crianças no espectro autista e com Síndrome de Down.",
+                syllabus: ["Adaptação Curricular: Traduzindo conteúdos abstratos.", "O Espelho e o Eu: Dinâmicas sensoriais.", "Rotinas Visuais: Reduzindo a ansiedade.", "Mediação de Conflitos: Afeto em sala."]
+            },
+            {
+                id: 2, category: 'edu', grad: 'edu-grad', icon: 'fa-book-open',
+                title: "Alfabetização Cidadã",
+                tag: "Escola Castro Alves",
+                short: "Matemática e Letramento na Rocinha.",
+                intro: "Na Escola Castro Alves (Rocinha/Valão), aprendemos que alfabetizar é ler o mundo. Utilizamos o território como material didático.",
+                syllabus: ["Matemática Real: Orçamento doméstico.", "Letramento Contextual: Lendo o bairro.", "Teatro e Oralidade: Confiança na fala.", "Cidadania Ativa: Direitos básicos."]
+            },
+            {
+                id: 4, category: 'tech', grad: 'tech-grad', icon: 'fa-robot',
+                title: "IA & Letramento Digital",
+                tag: "Tecnologia Crítica",
+                short: "Meta-ciência reversa e soberania digital.",
+                intro: "Desmistificamos os algoritmos para que o aluno deixe de ser usuário passivo e se torne um cidadão digital crítico.",
+                syllabus: ["IA Generativa: O que há por trás do ChatGPT.", "Meta-ciência Reversa: Identificando vieses.", "Prompt Ético: Perguntando melhor.", "Soberania Digital: Dados e privacidade."]
+            },
+            {
+                id: 3, category: 'eco', grad: 'eco-grad', icon: 'fa-hand-holding-heart',
+                title: "Horta Terra Encantada",
+                tag: "URS Haroldo Costa",
+                short: "Agroecologia e Ancestralidade.",
+                intro: "Na Unidade de Reinserção Social, transformamos a terra em oficina viva. Unimos imersão em Valença com sabedoria Yorubá.",
+                syllabus: ["Agroecologia Prática: Manejo do solo.", "Saberes Ancestrais: Mitologia Yorubá.", "Lei de Terras: História do RJ.", "Liberdade em Rede: Liderança."]
+            },
+            {
+                id: 5, category: 'art', grad: 'art-grad', icon: 'fa-wind',
+                title: "Oficina Gaia",
+                tag: "Boiúna",
+                short: "Ciência para o mundo, Arte para o eu.",
+                intro: "Entender o mundo para entender a nós mesmos. Unimos rigor científico e liberdade artística.",
+                syllabus: ["Cientista Investigador: Experimentos.", "Artista Sensível: Poesia e desenho.", "Diário de Bordo: Registro.", "Observação: Campo."]
+            },
+            {
+                id: 6, category: 'art', grad: 'art-grad', icon: 'fa-microphone-lines',
+                title: "Poesia & Memória",
+                tag: "Teatro Geremário Dantas",
+                short: "Identidade territorial e performance.",
+                intro: "Resgate de histórias locais e fortalecimento da identidade de Jacarepaguá através da escrita.",
+                syllabus: ["Resgate Oral: Rodas de conversa.", "Escrita Criativa: Poemas.", "Corpo e Voz: Performance.", "Zines: Publicação."]
+            },
+            {
+                id: 10, category: 'eco', grad: 'eco-grad', icon: 'fa-seedling',
+                title: "Permacultura & Jardim",
+                tag: "Pedro II / Valença",
+                short: "Educação ambiental prática.",
+                intro: "Conexão com a terra. Ensina crianças a cuidar, plantar e entender os ciclos da natureza.",
+                syllabus: ["Design Permacultural: Observar para planejar.", "Horta Pedagógica: Mão na terra.", "Compostagem: Ciclo da vida.", "Farmácia Viva: Plantas medicinais."]
+            },
+            {
+                id: 8, category: 'soc', grad: 'soc-grad', icon: 'fa-users',
+                title: "Jovens Líderes",
+                tag: "Gestão Pública",
+                short: "Formação política e conselhos.",
+                intro: "Baseada na vivência em Conselhos Municipais. Para jovens que querem transformar a cidade.",
+                syllabus: ["O que é um Conselho?: Espaços de poder.", "Gestão de Projetos: Tirando ideias do papel.", "Oratória: Defendendo ideias.", "Incidência Política: Dialogando com o poder."]
+            },
+            {
+                id: 9, category: 'soc', grad: 'soc-grad', icon: 'fa-bullhorn',
+                title: "Comunicação Popular",
+                tag: "JAAJ",
+                short: "Mídia comunitária e narrativas.",
+                intro: "Instrumentalizar a comunidade para contar suas próprias histórias e combater estereótipos.",
+                syllabus: ["Jornalismo Comunitário: O que é notícia?", "Produção Mobile: Foto e vídeo.", "Redes Sociais: Engajamento.", "Ética: Combatendo desinformação."]
+            },
+            {
+                id: 11, category: 'art', grad: 'art-grad', icon: 'fa-guitar',
+                title: "Produção de Saraus",
+                tag: "Mobilização",
+                short: "Cultura de vizinhança.",
+                intro: "Transformar qualquer espaço em palco cultural para fortalecer laços comunitários.",
+                syllabus: ["Produção Executiva: Organizando eventos.", "Curadoria Local: Mapeando talentos.", "Mobilização: Divulgação.", "Técnica: Som e luz acessíveis."]
+            }
+        ];
+
+        // --- LÓGICA DO SITE ---
+        function navTo(sectionId) {
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            
+            if(sectionId === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+            if(sectionId === 'about') document.querySelectorAll('.nav-item')[1].classList.add('active');
+            if(sectionId === 'catalog') document.querySelectorAll('.nav-item')[2].classList.add('active');
+            if(sectionId === 'contact') document.querySelectorAll('.nav-item')[3].classList.add('active');
+
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0,0);
+            if(window.innerWidth <= 900) toggleSidebar();
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function renderWorkshops(filter = 'all') {
+            const grid = document.getElementById('workshop-grid');
+            grid.innerHTML = '';
+            const filtered = filter === 'all' ? workshops : workshops.filter(w => w.category === filter);
+            
+            filtered.forEach(w => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openDetail(w);
+                card.innerHTML = `
+                    <div class="card-img-top ${w.grad}">
+                        <i class="fa-solid ${w.icon}"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge">${w.tag}</span>
+                        <h3>${w.title}</h3>
+                        <p>${w.short}</p>
+                        <span class="btn-link">Ver Detalhes <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterWorkshops(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderWorkshops(cat);
+        }
+
+        function openDetail(w) {
+            const list = w.syllabus.map(i => `<li>${i}</li>`).join('');
+            
+            // Texto para o WhatsApp (codificado para URL)
+            const whatsappText = encodeURIComponent(`Tive interesse na oficina ${w.title} e gostaria de saber mais informações para trazer para minha instituição`);
+            const whatsappLink = `https://wa.me/5521970442860?text=${whatsappText}`;
+
+            document.getElementById('detail-content').innerHTML = `
+                <span style="color:var(--accent); font-weight:bold; letter-spacing:1px; text-transform:uppercase;">${w.tag}</span>
+                <h2 style="color:var(--primary); margin: 10px 0 20px 0; font-size: 2.5rem; line-height:1.1;">${w.title}</h2>
+                <p style="font-size:1.2rem; color:#555; border-left:4px solid var(--accent); padding-left:20px; margin-bottom:30px;">${w.intro}</p>
+                <h4 style="color:var(--primary); font-size:1.3rem; margin-bottom:15px;">O que vamos aprender:</h4>
+                <ul style="padding-left:20px; line-height:1.8; color:#555;">${list}</ul>
+                <div style="margin-top:40px; background:var(--bg); padding:20px; border-radius:10px; text-align:center;">
+                    <h3 style="color:var(--primary); margin-bottom:5px;">Levar essa oficina para sua instituição?</h3>
+                    <p style="margin-bottom:15px; color:#666;">Vamos conversar sobre adaptações.</p>
+                    <a href="${whatsappLink}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:12px 30px; border-radius:30px; text-decoration:none; font-weight:bold;">
+                        <i class="fa-brands fa-whatsapp"></i> Iniciar Conversa
+                    </a>
+                </div>
+            `;
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('detail-panel').classList.add('active');
+        }
+
+        function closeDetail() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('detail-panel').classList.remove('active');
+        }
+
+        renderWorkshops();
+    </script>
+</body>
+</html>
+
+
